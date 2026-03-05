@@ -21,7 +21,7 @@ dotenv.config();
 
 const app = express();
 const __dirname = path.resolve();
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 5000;
 
 const httpServer = createServer(app);
 initializeSocket(httpServer);
@@ -70,7 +70,7 @@ const distPath = path.resolve(__dirname, "../frontend/dist");
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(distPath));
 
-  app.get("*", (req, res) => {
+  app.get(/.*/, (req, res) => {
     res.sendFile(path.join(distPath, "index.html"));
   });
 }
